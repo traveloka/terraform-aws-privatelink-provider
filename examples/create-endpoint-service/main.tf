@@ -2,33 +2,24 @@ provider "aws" {
   region = "ap-southeast-1"
 }
 
-#################################################################################################
-# Variable declaration. Change the default value with a valid value before you used this example
-#################################################################################################
-variable "nlb_arns" {
-  description = "List of all ARNs of the NLBs which associate with the endpoint service"
-  default     = ["arn:aws:elasticloadbalancing:ap-southeast-1:012345678901:loadbalancer/net/service-provider-nlb/01ab234c5d67e8f9"]
-}
-
-variable "allowed_principals" {
-  description = "List of all whitelist AWS principals to connect to this endpoint"
-  default     = ["arn:aws:iam::123456789012:root"]
-}
-
-variable "acceptance_required" {
-  description = "Whether or not VPC endpoint connection requests to the service must be accepted by the service owner"
-  default     = false
+#############################################################################################
+# Local values declaration. Change the value with a valid value before you used this example
+#############################################################################################
+locals {
+  nlb_arns            = ["arn:aws:elasticloadbalancing:ap-southeast-1:012345678901:loadbalancer/net/service-provider-nlb/01ab234c5d67e8f9"]
+  allowed_principals  = ["arn:aws:iam::123456789012:root"]
+  acceptance_required = false
 }
 
 #######################
 # VPC Endpoint Service
 #######################
 module "service-provider" {
-  source = "../"
+  source = "../../"
 
-  nlb_arns = "${var.nlb_arns}"
+  nlb_arns = "${local.nlb_arns}"
 
   # Optional
-  allowed_principals  = "${var.allowed_principals}"
-  acceptance_required = "${var.acceptance_required}"
+  allowed_principals  = "${local.allowed_principals}"
+  acceptance_required = "${local.acceptance_required}"
 }
