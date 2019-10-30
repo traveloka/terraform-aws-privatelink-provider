@@ -3,7 +3,8 @@ resource "aws_vpc_endpoint_service" "service_provider" {
   network_load_balancer_arns = ["${var.nlb_arns}"]
 
   tags = {
-    Name             = "${var.service_name}"
+    Name             = "${var.service_name}-vpce"
+    Service          = "${var.service_name}"
     Description      = "${var.description}"
     Environment      = "${var.environment}"
     ProductDomain    = "${var.product_domain}"
