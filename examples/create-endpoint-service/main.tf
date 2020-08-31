@@ -23,13 +23,14 @@ locals {
 module "service-provider" {
   source = "../../"
 
-  nlb_arns       = "${local.nlb_arns}"
-  service_name   = "${local.service_name}"
+  nlb_arns       = local.nlb_arns
+  service_name   = local.service_name
   product_domain = "abc"
   environment    = "staging"
   description    = "VPC Endpoint Service for service ${local.service_name}"
 
   # Optional
-  allowed_principals  = "${local.allowed_principals}"
-  acceptance_required = "${local.acceptance_required}"
+  allowed_principals  = local.allowed_principals
+  acceptance_required = local.acceptance_required
 }
+
